@@ -5,6 +5,7 @@ import sys
 WORD_URL = "http://learncodethehardway.org/words.txt"
 WORDS = []
 
+# create a bunch of phrases with placeholders for random words to be supplied by the text file
 PHRASES = {
 	"class %%%(%%%):":
 	 "Make a class named %%% that is-a %%%.",
@@ -27,6 +28,8 @@ else:
 	PHRASE_FIRST = False
 	
 	# load up the words from the website
+	# Opens text file with urlopen, and starts reading in lines until EOF
+	# strip([chars]) returns a string stripped of leading/trailing chars (default strips whitespace)
 	for word in urlopen(WORD_URL).readlines():
 		WORDS.append(word.strip())
 		
@@ -65,10 +68,16 @@ def convert(snippet, phrase):
 # keep going until they hit CTRL-D
 try:
 	while True:
+		# keys() returns a list of all keys in the dictionary
+		# snippets is a list of the code snippets
+		# snippet is a particular code snippet
+		# Phrases[snippet] is the english description of that code snippet
 		snippets = PHRASES.keys()
+		# put all the snippets in random order
 		random.shuffle(snippets)
 		
 		for snippet in snippets:
+			# get the phrase associated with the snippet
 			phrase = PHRASES[snippet]
 			question, answer = convert(snippet, phrase)
 			if PHRASE_FIRST:
